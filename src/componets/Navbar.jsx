@@ -2,9 +2,10 @@ import React from 'react'
 import {Link} from "react-router-dom"
 // import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 function Navbar() {
     const { isAuth, logout } = useAuth();
-  //  const { cart } = useCart();
+   const { cart } = useCart();
   return (
     <nav>
 {/* <h2>E-Commerse</h2> */}
@@ -12,7 +13,7 @@ function Navbar() {
   <h2 style={styles.logo}>ShopClone</h2>
   <div style={styles.links}>
     <Link to="/" style={styles.link} >Home</Link>
-   <Link to="/cart">Cart</Link>
+   <Link to="/cart">Cart ({cart.length}) </Link>
       {isAuth ? (
         <button onClick={logout}>Logout</button>
       ) : (

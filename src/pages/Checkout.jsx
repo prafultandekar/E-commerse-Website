@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 function Checkout() {
   const { cart, clearCart } = useCart();
   const navigate = useNavigate();
+  const {isAuth} = useAuth()
 
   const [paymentMode, setPaymentMode] = useState("cash");
+
+
+  useEffect(() => {
+  if (!isAuth) {
+    alert("Please login to continue checkout.");
+    navigate("/login");
+  }
+}, [isAuth, navigate]);
+
 
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 

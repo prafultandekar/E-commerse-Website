@@ -1,9 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const {isAuth} = useAuth();
+   const navigate = useNavigate();
+
+   const handleAddToCart = () => {
+    if (!isAuth) {
+      alert("Please login to add items to cart.");
+      navigate("/login");
+      return;
+    }
+
+    addToCart(product);
+  };
 
   return (
     <div
@@ -68,7 +81,7 @@ function ProductCard({ product }) {
           </button>
         </Link>
         <button
-          onClick={() => addToCart(product)}
+          onClick={handleAddToCart}
           style={{
             padding: "10px",
             flex: 1,
